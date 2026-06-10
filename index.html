@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Not Defined — something is coming</title>
+<meta name="description" content="A collective for neurodivergent minds. Built by one of us, for people who were never the problem. Be first in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16161a; --ink2:#1f1f25; --ink3:#2a2a32;
+    --bone:#efe9dd; --bone-dim:#a8a399;
+    --signal:#ff6a00; --signal-deep:#e85d00;
+    --line:rgba(239,233,221,.13); --line-strong:rgba(239,233,221,.26);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--ink);color:var(--bone);
+    font-family:'Archivo',system-ui,sans-serif;line-height:1.6;letter-spacing:-.01em;
+    -webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden;
+    display:flex;flex-direction:column;
+  }
+  ::selection{background:var(--signal);color:var(--ink)}
+  a{color:var(--signal);text-underline-offset:3px}
+  .wrap{width:100%;max-width:720px;margin:0 auto;padding:0 26px}
+
+  /* subtle ambient warmth, not a gradient cliché — just a faint glow top-left */
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(60vw 50vh at 18% 0%, rgba(255,106,0,.06), transparent 70%)}
+  .layer{position:relative;z-index:1}
+
+  /* top status bar */
+  .status{border-bottom:1px solid var(--line)}
+  .status .wrap{display:flex;justify-content:space-between;align-items:center;height:56px;
+    font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim)}
+  .status .live{display:flex;align-items:center;gap:.5rem;color:var(--bone)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 12px 1px rgba(255,106,0,.7);animation:pulse 2.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.82)}}
+
+  /* hero */
+  main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:8vh 0 6vh}
+  .err{font-family:'IBM Plex Mono',monospace;font-size:clamp(.75rem,1.8vw,.9rem);letter-spacing:.22em;text-transform:uppercase;color:var(--signal);margin-bottom:2.4rem;opacity:0;animation:fade .8s .2s forwards}
+  h1{
+    font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:900;text-transform:uppercase;
+    font-size:clamp(3.2rem,15vw,8rem);line-height:.86;letter-spacing:-.03em;
+  }
+  h1 .l1{display:block;opacity:0;animation:up .8s .35s cubic-bezier(.2,.8,.3,1) forwards}
+  h1 .l2{display:block;opacity:0;animation:up .8s .5s cubic-bezier(.2,.8,.3,1) forwards}
+  h1 .strike{position:relative;display:inline-block}
+  h1 .strike::after{content:"";position:absolute;left:-.03em;right:-.03em;top:54%;height:.07em;
+    background:var(--signal);transform:scaleX(0);transform-origin:left;
+    animation:strike .9s 1.05s cubic-bezier(.7,0,.25,1) forwards}
+
+  .lede{font-family:'Newsreader',serif;font-style:normal;font-size:clamp(1.25rem,3.6vw,1.95rem);
+    line-height:1.38;color:var(--bone);max-width:20ch;margin-top:2.4rem;opacity:0;animation:up .8s .9s forwards}
+  .lede em{font-style:italic;color:var(--signal)}
+  .strap{font-family:'IBM Plex Mono',monospace;font-size:clamp(.74rem,1.9vw,.9rem);letter-spacing:.16em;text-transform:uppercase;color:var(--bone);margin-top:1.5rem;opacity:0;animation:up .8s .72s forwards}
+
+  /* rotating manifesto flashes */
+  .flashes{margin-top:2.6rem;height:1.7em;position:relative;opacity:0;animation:fade .8s 1.3s forwards}
+  .flash{position:absolute;left:0;top:0;font-family:'IBM Plex Mono',monospace;font-size:clamp(.82rem,2.2vw,1rem);
+    letter-spacing:.04em;color:var(--bone-dim);opacity:0;transition:opacity .5s,transform .5s;transform:translateY(8px)}
+  .flash.on{opacity:1;transform:none}
+  .flash b{color:var(--bone);font-weight:500}
+
+  /* email capture */
+  .capture{margin-top:3.4rem;max-width:440px;opacity:0;animation:up .8s 1.5s forwards}
+  .capture .ask{font-size:1.02rem;color:var(--bone);margin-bottom:1rem}
+  .capture .ask b{color:var(--signal);font-weight:600}
+  form{display:flex;gap:8px;flex-wrap:wrap}
+  .field{flex:1;min-width:200px;position:relative}
+  input[type=email]{
+    width:100%;background:var(--ink2);border:1px solid var(--line-strong);border-radius:10px;
+    color:var(--bone);font-family:inherit;font-size:1rem;padding:.95rem 1.05rem;letter-spacing:-.01em;
+    transition:border-color .2s,background .2s;
+  }
+  input[type=email]::placeholder{color:var(--bone-dim)}
+  input[type=email]:focus{outline:none;border-color:var(--signal);background:var(--ink3)}
+  button[type=submit]{
+    background:var(--signal);color:var(--ink);border:none;border-radius:10px;cursor:pointer;
+    font-family:'IBM Plex Mono',monospace;font-size:.82rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    padding:.95rem 1.5rem;transition:background .2s,transform .1s;white-space:nowrap;
+  }
+  button[type=submit]:hover{background:var(--signal-deep)}
+  button[type=submit]:active{transform:translateY(1px)}
+  .micro{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.04em;color:var(--bone-dim);margin-top:.9rem;line-height:1.5}
+
+  .success{display:none;background:var(--ink2);border:1px solid var(--signal);border-radius:12px;padding:1.4rem 1.5rem;margin-top:1rem}
+  .success.show{display:block;animation:up .5s forwards}
+  .success .h{font-family:'Archivo';font-stretch:112%;font-weight:800;text-transform:uppercase;font-size:1.15rem;margin-bottom:.4rem}
+  .success p{color:var(--bone-dim);font-size:.94rem}
+  .success .em{color:var(--bone)}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:2.4rem 0;margin-top:auto}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+  .cross{font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.06em;color:var(--bone-dim)}
+  .cross a{font-weight:500}
+  .cross .x{color:var(--bone)}
+  .copyr{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bone-dim);opacity:.7}
+
+  @keyframes fade{to{opacity:1}}
+  @keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes strike{to{transform:scaleX(1)}}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important}
+    .err,.strap,.lede,.flashes,.capture,h1 .l1,h1 .l2{opacity:1}
+    h1 .strike::after{transform:scaleX(1)}
+    .dot{animation:none}
+  }
+  @media (max-width:560px){
+    footer .wrap{flex-direction:column;align-items:flex-start;gap:.8rem}
+  }
+</style>
+</head>
+<body>
+<div class="layer">
+
+  <div class="status">
+    <div class="wrap">
+      <span>Not Defined</span>
+      <span class="live"><span class="dot"></span>Opening soon</span>
+    </div>
+  </div>
+
+  <main>
+    <div class="wrap">
+      <div class="err">Error 404 — Deficit not found</div>
+      <h1>
+        <span class="l1">Not</span>
+        <span class="l2"><span class="strike">Defined</span></span>
+      </h1>
+      <p class="strap">Built for you, by people like you.</p>
+
+      <div class="flashes" id="flashes">
+        <div class="flash"><b>Not a deficit.</b> Not a disorder.</div>
+        <div class="flash">Same letters — <b>different brains.</b></div>
+        <div class="flash">Rated by people who <b>actually get it.</b></div>
+        <div class="flash">Tools built for <b>how you actually work.</b></div>
+        <div class="flash"><b>Falling off</b> isn't failing.</div>
+      </div>
+
+      <div class="capture">
+        <p class="ask">A collective for differently-wired minds is coming. <b>Be first through the door.</b></p>
+        <form id="signup" novalidate>
+          <div class="field">
+            <input type="email" id="email" placeholder="you@email.com" autocomplete="email" required aria-label="Your email address">
+          </div>
+          <button type="submit">Keep me posted</button>
+        </form>
+        <p class="micro">No spam, no noise. One message when the doors open. Leave whenever you like.</p>
+
+        <div class="success" id="success" role="status" aria-live="polite">
+          <div class="h">You're on the list.</div>
+          <p>We'll send one message to <span class="em" id="echo">your inbox</span> the moment the doors open. That's it. <span class="em">Welcome — you found the others.</span></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span class="cross">The clothing lives at <a href="https://clotheswithoutlabels.co.uk">clotheswithoutlabels.co.uk</a> <span class="x">— clothing without labels.</span></span>
+      <span class="copyr">© Not Defined</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // rotating manifesto flashes
+  (function(){
+    const flashes=[...document.querySelectorAll('#flashes .flash')];
+    if(!flashes.length) return;
+    let i=0;
+    const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    flashes[0].classList.add('on');
+    if(reduce) return; // hold first line only
+    setInterval(()=>{
+      flashes[i].classList.remove('on');
+      i=(i+1)%flashes.length;
+      flashes[i].classList.add('on');
+    },3200);
+  })();
+
+  // email capture → Kit, via your Cloudflare Worker proxy
+  // ───────────────────────────────────────────────────────────────
+  // The Kit API key lives in the Worker (server-side), NOT here.
+  // Deploy kit-signup-worker.js, then paste its URL below.
+  const WORKER_URL = "https://nd-signup.subsetc.workers.dev";
+  const FORM = "collective";   // this page = the Not Defined collective form
+  // ───────────────────────────────────────────────────────────────
+
+  (function(){
+    const form=document.getElementById('signup');
+    const email=document.getElementById('email');
+    const success=document.getElementById('success');
+    const echo=document.getElementById('echo');
+    const btn=form.querySelector('button[type=submit]');
+
+    function showSuccess(v){
+      echo.textContent=v;
+      form.style.display='none';
+      document.querySelector('.capture .ask').style.display='none';
+      document.querySelector('.micro').style.display='none';
+      success.classList.add('show');
+    }
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const v=(email.value||'').trim();
+      const ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);
+      if(!ok){ email.focus(); email.style.borderColor='var(--signal)'; return; }
+
+      btn.disabled=true; const label=btn.textContent; btn.textContent='…';
+
+      try{
+        await fetch(WORKER_URL,{
+          method:'POST',
+          headers:{'Content-Type':'application/json; charset=utf-8'},
+          body:JSON.stringify({ email: v, form: FORM })
+        });
+        // Worker treats duplicates/return-subscriber as success; any completed
+        // request thanks the person. (Network blips also fall through to success.)
+        showSuccess(v);
+      }catch(err){
+        console.error('Signup failed:', err);
+        showSuccess(v); // never punish a valid email for a network blip
+      }finally{
+        btn.disabled=false; btn.textContent=label;
+      }
+    });
+  })();
+</script>
+</body>
+</html>
