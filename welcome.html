@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You're in — Not Defined</title>
+<meta name="description" content="You're confirmed. We'll be in touch when Not Defined opens its doors.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2316161a'/%3E%3Ctext x='3' y='24' font-family='Arial Black,sans-serif' font-weight='900' font-size='22' fill='%23efe9dd'%3END%3C/text%3E%3Crect x='15' y='13' width='14' height='2.5' rx='1' fill='%23ff6a00'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink:#16161a; --ink2:#1f1f25; --ink3:#2a2a32;
+    --bone:#efe9dd; --bone-dim:#a8a399;
+    --signal:#ff6a00; --signal-deep:#e85d00;
+    --line:rgba(239,233,221,.13); --line-strong:rgba(239,233,221,.26);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--ink);color:var(--bone);
+    font-family:'Archivo',system-ui,sans-serif;line-height:1.6;letter-spacing:-.01em;
+    -webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden;
+    display:flex;flex-direction:column;
+  }
+  ::selection{background:var(--signal);color:var(--ink)}
+  a{color:var(--signal);text-underline-offset:3px}
+  .wrap{width:100%;max-width:680px;margin:0 auto;padding:0 26px}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(55vw 45vh at 15% 20%, rgba(255,106,0,.07), transparent 65%)}
+  .layer{position:relative;z-index:1;flex:1;display:flex;flex-direction:column}
+
+  /* status bar */
+  .status{border-bottom:1px solid var(--line)}
+  .status .wrap{display:flex;justify-content:space-between;align-items:center;height:56px;
+    font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim)}
+  .status a{color:var(--bone);text-decoration:none;font-weight:500}
+
+  /* main */
+  main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:10vh 0 6vh;text-align:center}
+
+  /* the mark */
+  .mark{
+    font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:900;text-transform:uppercase;
+    font-size:clamp(2.4rem,10vw,5.2rem);line-height:.9;letter-spacing:-.03em;
+    opacity:0;animation:up .8s .1s cubic-bezier(.2,.8,.3,1) forwards;
+    display:inline-block;
+  }
+  .mark .s{position:relative;display:inline-block}
+  .mark .s::after{content:"";position:absolute;left:-.03em;right:-.03em;top:54%;height:.07em;
+    background:var(--signal);transform:scaleX(0);transform-origin:left;
+    animation:strike .9s .75s cubic-bezier(.7,0,.25,1) forwards}
+
+  /* confirmed badge */
+  .badge{
+    display:inline-flex;align-items:center;gap:.5rem;
+    font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--signal);margin-top:2rem;
+    opacity:0;animation:fade .8s 1.1s forwards;
+  }
+  .badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--signal);
+    box-shadow:0 0 12px 1px rgba(255,106,0,.7);flex-shrink:0}
+
+  /* headline */
+  h1{
+    font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:900;text-transform:uppercase;
+    font-size:clamp(2.8rem,12vw,6.4rem);line-height:.88;letter-spacing:-.03em;
+    margin-top:1.6rem;
+    opacity:0;animation:up .8s 1.3s cubic-bezier(.2,.8,.3,1) forwards;
+  }
+  h1 em{display:block;color:var(--signal);font-style:normal}
+
+  /* sub */
+  .sub{
+    font-family:'Newsreader',serif;font-style:italic;
+    font-size:clamp(1.2rem,3.2vw,1.7rem);line-height:1.4;
+    color:var(--bone);max-width:28ch;margin:1.8rem auto 0;
+    opacity:0;animation:up .8s 1.6s forwards;
+  }
+
+  /* manifesto pull */
+  .pull{
+    font-family:'IBM Plex Mono',monospace;font-size:clamp(.74rem,1.8vw,.88rem);
+    letter-spacing:.06em;color:var(--bone-dim);
+    margin:2.4rem auto 0;max-width:44ch;line-height:1.6;
+    opacity:0;animation:fade .8s 1.9s forwards;
+  }
+  .pull b{color:var(--bone);font-weight:500}
+
+  /* share */
+  .share-wrap{margin-top:3.2rem;opacity:0;animation:up .8s 2.1s forwards}
+  .share-label{font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--bone-dim);margin-bottom:1.1rem}
+  .share-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .share-btn{
+    display:inline-flex;align-items:center;gap:.5rem;
+    font-family:'IBM Plex Mono',monospace;font-size:.76rem;font-weight:600;
+    letter-spacing:.08em;text-transform:uppercase;
+    padding:.75rem 1.2rem;border-radius:9px;border:1px solid var(--line-strong);
+    background:var(--ink2);color:var(--bone);cursor:pointer;text-decoration:none;
+    transition:border-color .2s,background .2s;
+  }
+  .share-btn:hover{border-color:var(--signal);background:var(--ink3)}
+  .share-btn.primary{background:var(--signal);color:var(--ink);border-color:var(--signal)}
+  .share-btn.primary:hover{background:var(--signal-deep);border-color:var(--signal-deep)}
+  .copied{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+    color:var(--signal);margin-top:.8rem;height:1.2em;transition:opacity .3s;opacity:0}
+  .copied.show{opacity:1}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:2.4rem 0}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+  .flink{font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.06em;color:var(--bone-dim)}
+  .flink a{font-weight:500}
+  .copyr{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bone-dim);opacity:.7}
+
+  @keyframes fade{to{opacity:1}}
+  @keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes strike{to{transform:scaleX(1)}}
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important}
+    .mark,.badge,h1,.sub,.pull,.share-wrap{opacity:1}
+    .mark .s::after{transform:scaleX(1)}
+  }
+  @media (max-width:560px){footer .wrap{flex-direction:column;align-items:flex-start;gap:.8rem}}
+</style>
+</head>
+<body>
+<div class="layer">
+
+  <div class="status">
+    <div class="wrap">
+      <a href="/">← Not Defined</a>
+      <span>notdefined.co.uk</span>
+    </div>
+  </div>
+
+  <main>
+    <div class="wrap">
+      <div class="mark">Not <span class="s">Defined</span></div>
+      <div class="badge">You're confirmed</div>
+
+      <h1>You're<em>in.</em></h1>
+
+      <p class="sub">We'll be in touch when the doors open. Until then — tell someone else who needs this.</p>
+
+      <p class="pull">
+        <b>Not a deficit. Not a disorder.</b><br>
+        Built for you, by people like you.
+      </p>
+
+      <div class="share-wrap">
+        <div class="share-label">Know someone who gets it?</div>
+        <div class="share-row">
+          <a class="share-btn primary" id="copyLink" href="#">Copy the link</a>
+          <a class="share-btn" id="shareWhatsApp" href="#" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="share-btn" id="shareTwitter" href="#" target="_blank" rel="noopener">X / Twitter</a>
+        </div>
+        <div class="copied" id="copied">Link copied.</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span class="flink">The clothing lives at <a href="https://clothingwithoutlabels.co.uk">clothingwithoutlabels.co.uk</a></span>
+      <span class="copyr">© Not Defined</span>
+    </div>
+  </footer>
+
+</div>
+<script>
+  const URL = "https://notdefined.co.uk";
+  const TEXT = "Just found Not Defined — a collective for neurodivergent minds. Built for us, by us. Doors opening soon.";
+
+  document.getElementById('shareWhatsApp').href =
+    `https://wa.me/?text=${encodeURIComponent(TEXT + ' ' + URL)}`;
+  document.getElementById('shareTwitter').href =
+    `https://twitter.com/intent/tweet?text=${encodeURIComponent(TEXT)}&url=${encodeURIComponent(URL)}`;
+
+  document.getElementById('copyLink').addEventListener('click', async (e)=>{
+    e.preventDefault();
+    try{
+      await navigator.clipboard.writeText(URL);
+      const c=document.getElementById('copied');
+      c.classList.add('show');
+      setTimeout(()=>c.classList.remove('show'), 2200);
+    }catch{}
+  });
+</script>
+</body>
+</html>
