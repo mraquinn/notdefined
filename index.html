@@ -16,7 +16,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Not Defined — something is coming">
-<meta name="twitter:description" content="A collective for neurodivergent minds. Built by one of us, for people who were never the problem. Be first in.">
+<meta name="twitter:description" content="A collective for neurodivergent minds. Built for people like you, by people like you. Be first in.">
 <meta name="twitter:image" content="https://notdefined.co.uk/og-image.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -144,7 +144,6 @@
 
   <main>
     <div class="wrap">
-      <div class="err">Error 404 — Deficit not found</div>
       <h1>
         <span class="l1">Not</span>
         <span class="l2"><span class="strike">Defined</span></span>
@@ -153,10 +152,9 @@
 
       <div class="flashes" id="flashes">
         <div class="flash"><b>Not a deficit.</b> Not a disorder.</div>
-        <div class="flash">Same letters — <b>different brains.</b></div>
-        <div class="flash">Rated by people who <b>actually get it.</b></div>
+        <div class="flash">Same letters. <b>Different brains.</b></div>
+        <div class="flash">Ratings by people who <b>actually get it.</b></div>
         <div class="flash">Tools built for <b>how you actually work.</b></div>
-        <div class="flash"><b>Falling off</b> isn't failing.</div>
       </div>
 
       <div class="capture">
@@ -179,7 +177,6 @@
 
   <footer>
     <div class="wrap">
-      <span class="cross">The clothing lives at <a href="https://clotheswithoutlabels.co.uk">clotheswithoutlabels.co.uk</a> <span class="x">— clothing without labels.</span></span>
       <span class="copyr">© Not Defined</span>
     </div>
   </footer>
@@ -201,14 +198,9 @@
       flashes[i].classList.add('on');
     },3200);
   })();
-
-  // email capture → Kit, via your Cloudflare Worker proxy
-  // ───────────────────────────────────────────────────────────────
-  // The Kit API key lives in the Worker (server-side), NOT here.
-  // Deploy kit-signup-worker.js, then paste its URL below.
+  
   const WORKER_URL = "https://nd-signup.subsetc.workers.dev";
-  const FORM = "collective";   // this page = the Not Defined collective form
-  // ───────────────────────────────────────────────────────────────
+  const FORM = "collective";
 
   (function(){
     const form=document.getElementById('signup');
@@ -239,12 +231,10 @@
           headers:{'Content-Type':'application/json; charset=utf-8'},
           body:JSON.stringify({ email: v, form: FORM })
         });
-        // Worker treats duplicates/return-subscriber as success; any completed
-        // request thanks the person. (Network blips also fall through to success.)
         showSuccess(v);
       }catch(err){
         console.error('Signup failed:', err);
-        showSuccess(v); // never punish a valid email for a network blip
+        showSuccess(v);
       }finally{
         btn.disabled=false; btn.textContent=label;
       }
